@@ -14,6 +14,46 @@ ruby app.rb
 # Your server will be started on http://localhost:4567
 ```
 
+## The Focus
+
+The main focus here to create GraphQL JavaScript clients easily. Please read the following code to see how easy to query a GraphQL server.
+
+```js
+var graph = graphql("/graphql", {
+  alwaysAutodeclare: true,
+  fragments: {
+    todo: `on Todo {
+      id
+      text
+      isCompleted
+    }`
+  }
+})
+
+function getTodos() {
+  return graph.query.run(`allTodos { ...todo }`)
+}
+
+function addTodo(text) {
+  return graph.mutate(`todoAdd(text: $text) { ...todo }`)({
+    text: text
+  })
+}
+
+function setTodo(id, isCompleted) {
+  return graph.mutate(`todoComplete(id: $id, status: $isCompleted) { ...todo }`)({
+    "id!ID": id,
+    isCompleted: isCompleted
+  })
+}
+
+function removeTodo(id) {
+  return graph.mutate(`todoRemove(id: $id) { ...todo }`)({
+    "id!ID": id
+  })
+}
+```
+
 ## License
 
 MIT License
