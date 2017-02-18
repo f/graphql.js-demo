@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <script src="http://rawgit.com/f/graphql.js/master/graphql.min.js?v1"></script>
+    <style>
+      .completed {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="todos">
+    </ul>
+    <button id="addTodo">Add Todo</button>
+
+    <script>
+      var graph = graphql("/graphql", {
+        alwaysAutodeclare: true,
+        fragments: {
+          todo: `on Todo {id, text, isCompleted}`
+        }
+      })
+
+      function getTodos() {
+        return graph.query.run(`allTodos { ...todo }`)
+      }
+
+      function addTodo(text) {
+        return graph.mutate(`todoAdd(text: $text) { ...todo }`)({
+          text: text
+        })
+      }
+
+      function setTodo(id, isCompleted) {
+        return graph.mutate(`todoComplete(id: $id, status: $isCompleted) { ...todo }`)({
+          "id!ID": id,
+          isCompleted: isCompleted
+        })
+      }
+
+      function removeTodo(id) {
+        return graph.mutate(`todoRemove(id: $id) { ...todo }`)({
+          "id!ID": id
+        })
+      }
+
+      var todos = document.getElementById("todos")
+      getTodos().then(function (data) {
+        data.allTodos.forEach(function (todo) {
+          if (todo.isCompleted) {
+            todos.innerHTML += "<li class='completed' id='" + todo.id + "'>" + todo.text + "</li>"
+          } else {
+            todos.innerHTML += "<li id='" + todo.id + "'>" + todo.text + "</li>"
+          }
+        })
+      })
+
+      todos.addEventListener('click', function (e) {
+        if (e.target.className == 'completed') {
+          removeTodo(e.target.getAttribute('id')).then(function () {
+            todos.removeChild(e.target)
+          })
+        }
+        if (e.target.tagName == 'LI') {
+          setTodo(e.target.getAttribute('id'), true).then(function () {
+            e.target.className = "completed"
+          })
+        }
+      })
+
+      document.getElementById('addTodo').addEventListener('click', function () {
+        addTodo(prompt("What you gonna do?", "")).then(function (data) {
+          todos.innerHTML += "<li id='" + data.todoAdd.id + "'>" + data.todoAdd.text + "</li>"
+        })
+      })
+    </script>
+  </body>
+</html>
