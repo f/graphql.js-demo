@@ -1,6 +1,6 @@
-# GraphQL.js Demo with Sinatra
+# GraphQL.js Demo with GraphQL.js, Sinatra and GraphQL-Ruby
 
-This is a ToDo app example that uses [**GraphQL.js**](https://github.com/f/graphql.js), [**Sinatra**]((https://sinatrarb.com)) and [**GraphQL-Ruby**](https://github.com/rmosolgo/graphql-ruby).
+This is a ToDo app example that uses [**GraphQL.js**](https://github.com/f/graphql.js), [**Sinatra**](https://sinatrarb.com) and [**GraphQL-Ruby**](https://github.com/rmosolgo/graphql-ruby).
 
 ## Installation
 
