@@ -44,6 +44,41 @@
       }
 
       var todos = document.getElementById("todos")
+      var source = new EventSource(`/graphql?query=
+        subscription ($id: ID!) {
+          todoAdded(id: $id) {
+            id
+            text
+          }
+          todoUpdated(id: $id) {
+            id
+            isCompleted
+          }
+          todoRemoved(id: $id) {
+            id
+          }
+        }`)
+
+      source.addEventListener('graphql.todoAdded', function (message) {
+        var data = JSON.parse(message.data)
+        var todo = data.data.todoAdded
+        todos.innerHTML += "<li id='" + todo.id + "'>" + todo.text + "</li>"
+      })
+
+      source.addEventListener('graphql.todoRemoved', function (message) {
+        var data = JSON.parse(message.data)
+        var todo = data.data.todoRemoved
+        var el = document.querySelector("li#" + todo.id)
+        todos.removeChild(el)
+      })
+
+      source.addEventListener('graphql.todoUpdated', function (message) {
+        var data = JSON.parse(message.data)
+        var todo = data.data.todoUpdated
+        var el = document.querySelector("li#" + todo.id)
+        el.className = "completed"
+      })
+
       getTodos().then(function (data) {
         data.allTodos.forEach(function (todo) {
           if (todo.isCompleted) {
@@ -56,21 +91,29 @@
 
       todos.addEventListener('click', function (e) {
         if (e.target.className == 'completed') {
-          removeTodo(e.target.getAttribute('id')).then(function () {
-            todos.removeChild(e.target)
-          })
-        }
-        if (e.target.tagName == 'LI') {
-          setTodo(e.target.getAttribute('id'), true).then(function () {
-            e.target.className = "completed"
-          })
+          removeTodo(e.target.getAttribute('id'))
+          
+          // Uncomment these lines if you do not use subscriptions.
+          // .then(function () {
+          //   todos.removeChild(e.target)
+          // })
+        } else {
+          setTodo(e.target.getAttribute('id'), true)
+          
+          // Uncomment these lines if you do not use subscriptions.
+          // .then(function () {
+          //   e.target.className = "completed"
+          // })
         }
       })
 
       document.getElementById('addTodo').addEventListener('click', function () {
-        addTodo(prompt("What you gonna do?", "")).then(function (data) {
-          todos.innerHTML += "<li id='" + data.todoAdd.id + "'>" + data.todoAdd.text + "</li>"
-        })
+        addTodo(prompt("What you gonna do?", ""))
+
+        // Uncomment these lines if you do not use subscriptions.
+        // .then(function (data) {
+        //   todos.innerHTML += "<li id='" + data.todoAdd.id + "'>" + data.todoAdd.text + "</li>"
+        // })
       })
     </script>
   </body>
