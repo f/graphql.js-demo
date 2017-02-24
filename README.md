@@ -10,7 +10,7 @@ This implementation includes following features:
 - Mutations
 - Subscriptions
 
-![Gif](./example.gif)
+![Gif](./demo.gif)
 
 ## Installation
 
