@@ -8,7 +8,7 @@ This implementation includes following features:
 
 - Queries
 - Mutations
-- Subscriptions
+- Subscriptions (Live via EventSource)
 
 ![Gif](./demo.gif)
 
