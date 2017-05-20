@@ -8,11 +8,15 @@ end
 
 Todo = Struct.new("Todo", :id, :text, :isCompleted)
 
+# Seed Data
 todos = [
   Todo.new(random_id, "Pay the bills.", false),
   Todo.new(random_id, "Go to dentist.", false),
   Todo.new(random_id, "Buy milk.", true)
 ]
+
+########################
+# Lets Define Types
 
 TodoType = GraphQL::ObjectType.define do
   name "Todo"
