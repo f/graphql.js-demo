@@ -6,13 +6,15 @@ def random_id
   8.times.collect{[*'a'..'z'].sample}.join
 end
 
+set :public_folder, Proc.new { File.join(root, "public") }
+
 Todo = Struct.new("Todo", :id, :text, :isCompleted)
 
 # Seed Data
 todos = [
-  Todo.new(random_id, "Pay the bills.", false),
-  Todo.new(random_id, "Go to dentist.", false),
-  Todo.new(random_id, "Buy milk.", true)
+  Todo.new(random_id, "Yaka kartlarını bastır.", false),
+  Todo.new(random_id, "Oteli ayarla.", false),
+  Todo.new(random_id, "Konuşmacıları yedir.", true)
 ]
 
 ########################

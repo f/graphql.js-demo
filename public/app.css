@@ -1,0 +1,55 @@
+body {
+  font-family: "Arial Rounded MT Bold";
+  font-weight: 300;
+  letter-spacing: 1px;
+  background-color: #222;
+  font-size: 10px;
+}
+h1 {
+  font-size: 1.2em;
+  border-bottom: 5px solid #DF4F3B;
+  line-height: 2em;
+}
+#app {
+  margin: 0 auto;
+  width: 500px;
+  max-width: 100%;
+  font-size: 3em;
+  color: #fff;
+}
+#todos {
+  list-style: none;
+  padding: 0;
+  min-height: 200px;
+  font-family: "Marker Felt";
+}
+#todos li {
+  padding: 10px;
+  position: relative;
+  transition-duration: 300ms;
+  cursor: pointer;
+}
+#todos li:before {
+  content: "⭕️ ";
+  position: absolute;
+  left: -50px;
+}
+#todos li.completed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+#todos li.completed:before {
+  content: "❌ ";
+}
+#addTodo {
+  font-size: 1em;
+  font-family: 'Arial';
+  line-height: 2em;
+  width: 100%;
+  border: 0;
+  border-top: 3px solid #DF4F3B;
+  background-color: transparent;
+  color: #fff;
+  outline: none;
+  padding: 0 10px;
+}
