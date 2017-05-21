@@ -1,14 +1,9 @@
 require 'sinatra'
 require 'graphql'
 require 'cgi'
-
-def random_id
-  8.times.collect{[*'a'..'z'].sample}.join
-end
+require './types'
 
 set :public_folder, Proc.new { File.join(root, "public") }
-
-require './types'
 
 get '/' do
   erb :index
