@@ -15,19 +15,19 @@ todos = [
 
 TodoType = GraphQL::ObjectType.define do
   name "Todo"
-  description "A todo item to be added into the todo list."
-  field :id, !types.ID
-  field :text, !types.String
-  field :isCompleted, !types.Boolean
+  description 'Todo her bir yapılacak iştir.'
+  field :id, !types.ID, 'Benzersiz kimlik numarası.'
+  field :text, !types.String, 'Yapılacak işin metni.'
+  field :isCompleted, !types.Boolean, 'Yapılacak iş tamamlandı mı?'
 end
 
 QueryType = GraphQL::ObjectType.define do
   name "Query"
-  description "The query root of this schema"
+  description 'Uygulama şemasının sorgu köküdür. Bu kök üzerinden sorgu yapılır.'
 
   field :allTodos do
     type types[TodoType]
-    description "Find a Post by ID"
+    description "Tüm yapılacak işleri listeler."
     resolve ->(obj, args, ctx) do
       return todos
     end
@@ -36,10 +36,11 @@ end
 
 MutationType = GraphQL::ObjectType.define do
   name "Mutation"
-  description "The mutation root of this schema"
+  description "Uygulama şemasının mutasyon köküdür. Bu kök üzerinden mutasyon yapılır."
 
   field :todoAdd do
     type TodoType
+    description "Yapılacak işler listesine yeni bir iş ekler."
     argument :text, !types.String
     resolve ->(obj, args, ctx) do
       todo = Todo.new(random_id, args[:text], false)
@@ -50,6 +51,7 @@ MutationType = GraphQL::ObjectType.define do
 
   field :todoComplete do
     type types[TodoType]
+    description "Yapılacak işler listesindeki bir işi tamamlar."
     argument :id, !types.ID
     argument :status, !types.Boolean
     resolve ->(obj, args, ctx) do
@@ -62,6 +64,7 @@ MutationType = GraphQL::ObjectType.define do
 
   field :todoRemove do
     type types[TodoType]
+    description "Yapılacak işler listesinden işi kaldırır."
     argument :id, !types.ID
     resolve ->(obj, args, ctx) do
       todos = todos.reject do |todo|
