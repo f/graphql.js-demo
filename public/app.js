@@ -26,5 +26,6 @@ document.getElementById('addTodo').addEventListener('keydown', function (e) {
   if (e.keyCode != 13) return;
   addTodo(e.target.value).then(function (data) {
     todos.innerHTML += "<li id='" + data.todoAdd.id + "'>" + data.todoAdd.text + "</li>"
+    e.target.value = '';
   })
 })
