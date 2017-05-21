@@ -2,7 +2,11 @@ require './utils'
 
 ## Models
 
-Todo = Struct.new("Todo", :id, :text, :isCompleted)
+Todo = Struct.new("Todo",
+  :id,
+  :text,
+  :isCompleted
+)
 
 ## Seed Models
 todos = [
