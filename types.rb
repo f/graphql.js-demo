@@ -60,6 +60,8 @@ MutationType = GraphQL::ObjectType.define do
       end
       return todos
     end
+
+    # will be deprecated
   end
 
   field :todoRemove do
