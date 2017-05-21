@@ -10,32 +10,40 @@ var graph = graphql("/graphql", {
 })
 
 function getTodos() {
-  return graph.query.run(`allTodos {
-    ...todo
-  }`)
+  return graph.query.run(`
+    allTodos {
+      ...todo
+    }
+  `)
 }
 
 function addTodo(text) {
-  return graph.mutate(`todoAdd(text: $text) {
-    ...todo
-  }`)({
+  return graph.mutate(`
+    todoAdd(text: $text) {
+      ...todo
+    }
+  `)({
     text: text
   })
 }
 
 function setTodo(id, isCompleted) {
-  return graph.mutate(`todoComplete(id: $id, status: $isCompleted) {
-    ...todo
-  }`)({
+  return graph.mutate(`
+    todoComplete(id: $id, status: $isCompleted) {
+      ...todo
+    }
+  `)({
     "id!ID": id,
     isCompleted: isCompleted
   })
 }
 
 function removeTodo(id) {
-  return graph.mutate(`todoRemove(id: $id) {
-    ...todo
-  }`)({
+  return graph.mutate(`
+    todoRemove(id: $id) {
+      ...todo
+    }
+  `)({
     "id!ID": id
   })
 }

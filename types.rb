@@ -21,6 +21,8 @@ TodoType = GraphQL::ObjectType.define do
   field :isCompleted, !types.Boolean, 'Yapılacak iş tamamlandı mı?'
 end
 
+# Base Types
+
 QueryType = GraphQL::ObjectType.define do
   name "Query"
   description 'Uygulama şemasının sorgu köküdür. Bu kök üzerinden sorgu yapılır.'
