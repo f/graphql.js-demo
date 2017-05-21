@@ -41,7 +41,7 @@ MutationType = GraphQL::ObjectType.define do
   field :todoAdd do
     type TodoType
     description "Yapılacak işler listesine yeni bir iş ekler."
-    argument :text, !types.String
+    argument :text, !types.String, 'Yapılacak işin metni.'
     resolve ->(obj, args, ctx) do
       todo = Todo.new(random_id, args[:text], false)
       todos << todo
@@ -53,7 +53,7 @@ MutationType = GraphQL::ObjectType.define do
     type types[TodoType]
     description "Yapılacak işler listesindeki bir işi tamamlar."
     argument :id, !types.ID
-    argument :status, !types.Boolean
+    argument :status, !types.Boolean, 'İşin yeni durumu'
     resolve ->(obj, args, ctx) do
       todos.each do |todo|
         todo.isCompleted = args[:status] if todo[:id] == args[:id]
