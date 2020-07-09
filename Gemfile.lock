@@ -2,8 +2,8 @@ GEM
   remote: http://rubygems.org/
   specs:
     graphql (1.4.2)
-    rack (1.6.5)
-    rack-protection (1.5.3)
+    rack (1.6.13)
+    rack-protection (1.5.5)
       rack
     redis (3.3.3)
     sinatra (1.4.8)
